@@ -2,3 +2,5 @@
 demo-jpa-kumuluz/target/
 /.metadata/
 /.recommenders/
+
+RemoteSystemsTempFiles/

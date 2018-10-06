@@ -22,8 +22,14 @@ public class PersonaService {
     em.persist(p);
   }
 
-  public void actualizar(final Persona p) {
-    final Persona pr = buscar(p.getId());
+  public void actualizar(final Persona p, boolean enContexto) {
+    final Persona pr;
+    if (!enContexto) {
+      pr = buscar(p.getId());
+    } else {
+      pr = p;
+    }
+
     if (pr != null) {
       pr.setNombre(p.getNombre());
       em.merge(pr);

@@ -1,17 +1,30 @@
 package com.sebastian.jpa.javase.dominio;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.MapKeyEnumerated;
+import javax.persistence.MapKeyTemporal;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.OrderColumn;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
@@ -22,21 +35,77 @@ public class Persona {
   private String nombre;
   @Transient
   private int abc;
+
   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @OrderBy("comuna DESC")
   private List<Direccion> direccion;
+
   @ElementCollection
   @OrderColumn
   private List<Integer> telefonos;
 
-  public Persona() {
+  @ElementCollection
+  @CollectionTable(joinColumns = @JoinColumn(name = "TELEFONO_MAP_REF"))
+  @MapKeyColumn(name = "TELEFONO_MAP_KEY")
+  @Column(name = "FONO")
+  @MapKeyEnumerated(EnumType.STRING)
+  private Map<TelefonoTipo, String> telefonoMap;
+  
+  // una persona podra tener un departamento por piso
+  @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
+  private Map<Integer, Departamento> deptos;
+  
+  // una persona tendra muchos notebooks y un notebook lo pueden usar muchos
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JoinTable(name = "persona_note",
+          joinColumns = @JoinColumn(name = "persona_id"),
+          inverseJoinColumns = @JoinColumn(name = "note_id")
+  )
+  @MapKeyColumn(name = "fecha_asigna_note") // att_KEY x defecto
+  @MapKeyTemporal(TemporalType.TIMESTAMP)
+  private Map<Date, Notebook> notebooks;
 
+  public Persona() {
+    telefonoMap = new HashMap<>();
+  }
+
+  public Map<Integer, Departamento> getDeptos() {
+    if (deptos == null) {
+      deptos = new HashMap<>();
+    }
+    return deptos;
+  }
+
+  public void setDeptos(Map<Integer, Departamento> deptos) {
+    this.deptos = deptos;
+  }
+
+  public Map<TelefonoTipo, String> getTelefonoMap() {
+    if (telefonoMap == null) {
+      telefonoMap = new HashMap<>();
+    }
+    return telefonoMap;
+  }
+
+  public void setTelefonoMap(Map<TelefonoTipo, String> telefonoMap) {
+    this.telefonoMap = telefonoMap;
   }
 
   public Persona(final int id, final String nombre) {
     this.id = id;
     this.nombre = nombre;
   }
+
+    public Map<Date, Notebook> getNotebooks() {
+        if (notebooks == null) {
+            notebooks = new HashMap<>();
+        }
+        return notebooks;
+    }
+
+    public void setNotebooks(Map<Date, Notebook> notebooks) {
+        this.notebooks = notebooks;
+    }
 
   public List<Integer> getTelefonos() {
     if (telefonos == null) {
@@ -76,7 +145,6 @@ public class Persona {
     this.nombre = nombre;
   }
 
-
   @Override
   public String toString() {
     return "Persona [id=" + id + ", nombre=" + nombre + ", abc=" + abc + ", direccion=" + direccion
@@ -108,5 +176,4 @@ public class Persona {
     }
     return true;
   }
-
 }

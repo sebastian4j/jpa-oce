@@ -9,6 +9,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import com.sebastian.jpa.javase.dominio.Departamento;
 import com.sebastian.jpa.javase.dominio.Direccion;
+import com.sebastian.jpa.javase.dominio.Hijo;
 import com.sebastian.jpa.javase.dominio.Notebook;
 import com.sebastian.jpa.javase.dominio.OrientacionGeografica;
 import com.sebastian.jpa.javase.dominio.Persona;
@@ -16,6 +17,7 @@ import com.sebastian.jpa.javase.dominio.TelefonoTipo;
 import java.util.Date;
 
 public class JpaSE {
+
   public static void main(final String[] args) {
     final EntityManagerFactory emf = Persistence.createEntityManagerFactory("se-pu");
     final EntityManager em = emf.createEntityManager();
@@ -33,6 +35,10 @@ public class JpaSE {
       final Map<TelefonoTipo, String> telefonos = new HashMap<>();
       telefonos.put(TelefonoTipo.PERSONAL, "123456");
       telefonos.put(TelefonoTipo.TRABAJO, "56789");
+      final Map<Integer, Hijo> hijos = new HashMap<>();
+      hijos.put(24921397, new Hijo(24921397, "Elías", p1));
+      hijos.put(16735546, new Hijo(16735546, "papi", p1));
+      p1.setHijos(hijos);      
       final Map<Integer, Departamento> departamentos = new HashMap<>();
       departamentos.put(1, new Departamento(OrientacionGeografica.ESTE, p1));
       departamentos.put(2, new Departamento(OrientacionGeografica.NORTE, p1));
@@ -58,5 +64,6 @@ public class JpaSE {
       e.printStackTrace();
       em.getTransaction().rollback();
     }
+//    emf.close();
   }
 }

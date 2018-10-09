@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.MapKey;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.MapKeyEnumerated;
 import javax.persistence.MapKeyTemporal;
@@ -30,6 +31,7 @@ import javax.persistence.Transient;
 @Entity
 @Access(AccessType.FIELD)
 public class Persona {
+
   @Id
   private int id;
   private String nombre;
@@ -50,11 +52,11 @@ public class Persona {
   @Column(name = "FONO")
   @MapKeyEnumerated(EnumType.STRING)
   private Map<TelefonoTipo, String> telefonoMap;
-  
+
   // una persona podra tener un departamento por piso
   @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
   private Map<Integer, Departamento> deptos;
-  
+
   // una persona tendra muchos notebooks y un notebook lo pueden usar muchos
   @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinTable(name = "persona_note",
@@ -65,8 +67,20 @@ public class Persona {
   @MapKeyTemporal(TemporalType.TIMESTAMP)
   private Map<Date, Notebook> notebooks;
 
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "padre")
+  @MapKey(name = "rut")
+  private Map<Integer, Hijo> hijos;
+
   public Persona() {
     telefonoMap = new HashMap<>();
+  }
+
+  public Map<Integer, Hijo> getHijos() {
+    return hijos;
+  }
+
+  public void setHijos(Map<Integer, Hijo> hijos) {
+    this.hijos = hijos;
   }
 
   public Map<Integer, Departamento> getDeptos() {
@@ -96,16 +110,16 @@ public class Persona {
     this.nombre = nombre;
   }
 
-    public Map<Date, Notebook> getNotebooks() {
-        if (notebooks == null) {
-            notebooks = new HashMap<>();
-        }
-        return notebooks;
+  public Map<Date, Notebook> getNotebooks() {
+    if (notebooks == null) {
+      notebooks = new HashMap<>();
     }
+    return notebooks;
+  }
 
-    public void setNotebooks(Map<Date, Notebook> notebooks) {
-        this.notebooks = notebooks;
-    }
+  public void setNotebooks(Map<Date, Notebook> notebooks) {
+    this.notebooks = notebooks;
+  }
 
   public List<Integer> getTelefonos() {
     if (telefonos == null) {
@@ -148,7 +162,7 @@ public class Persona {
   @Override
   public String toString() {
     return "Persona [id=" + id + ", nombre=" + nombre + ", abc=" + abc + ", direccion=" + direccion
-        + ", telefonos=" + telefonos + "]";
+            + ", telefonos=" + telefonos + "]";
   }
 
   @Override

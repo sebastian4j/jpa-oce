@@ -7,6 +7,8 @@
     <class>com.sebastian.jpa.javase.dominio.Departamento</class>
     <class>com.sebastian.jpa.javase.dominio.Notebook</class>
     <class>com.sebastian.jpa.javase.dominio.Hijo</class>
+    <class>com.sebastian.jpa.javase.dominio.Mascota</class>
+    <class>com.sebastian.jpa.javase.dominio.MascotaPatas</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>

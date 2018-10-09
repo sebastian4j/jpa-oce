@@ -59,10 +59,8 @@ public class Persona {
 
   // una persona tendra muchos notebooks y un notebook lo pueden usar muchos
   @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinTable(name = "persona_note",
-          joinColumns = @JoinColumn(name = "persona_id"),
-          inverseJoinColumns = @JoinColumn(name = "note_id")
-  )
+  @JoinTable(name = "persona_note", joinColumns = @JoinColumn(name = "persona_id"),
+      inverseJoinColumns = @JoinColumn(name = "note_id"))
   @MapKeyColumn(name = "fecha_asigna_note") // att_KEY x defecto
   @MapKeyTemporal(TemporalType.TIMESTAMP)
   private Map<Date, Notebook> notebooks;
@@ -71,8 +69,28 @@ public class Persona {
   @MapKey(name = "rut")
   private Map<Integer, Hijo> hijos;
 
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "persona")
+  private Map<MascotaPatas, Mascota> mascotas;
+
   public Persona() {
     telefonoMap = new HashMap<>();
+  }
+
+  /**
+   * @return the mascotas
+   */
+  public Map<MascotaPatas, Mascota> getMascotas() {
+    if (mascotas == null) {
+      mascotas = new HashMap<>();
+    }
+    return mascotas;
+  }
+
+  /**
+   * @param mascotas the mascotas to set
+   */
+  public void setMascotas(Map<MascotaPatas, Mascota> mascotas) {
+    this.mascotas = mascotas;
   }
 
   public Map<Integer, Hijo> getHijos() {
@@ -162,7 +180,7 @@ public class Persona {
   @Override
   public String toString() {
     return "Persona [id=" + id + ", nombre=" + nombre + ", abc=" + abc + ", direccion=" + direccion
-            + ", telefonos=" + telefonos + "]";
+        + ", telefonos=" + telefonos + "]";
   }
 
   @Override

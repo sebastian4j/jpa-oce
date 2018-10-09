@@ -1,5 +1,6 @@
 package com.sebastian.jpa.javase;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -10,11 +11,12 @@ import javax.persistence.Persistence;
 import com.sebastian.jpa.javase.dominio.Departamento;
 import com.sebastian.jpa.javase.dominio.Direccion;
 import com.sebastian.jpa.javase.dominio.Hijo;
+import com.sebastian.jpa.javase.dominio.Mascota;
+import com.sebastian.jpa.javase.dominio.MascotaPatas;
 import com.sebastian.jpa.javase.dominio.Notebook;
 import com.sebastian.jpa.javase.dominio.OrientacionGeografica;
 import com.sebastian.jpa.javase.dominio.Persona;
 import com.sebastian.jpa.javase.dominio.TelefonoTipo;
-import java.util.Date;
 
 public class JpaSE {
 
@@ -38,7 +40,7 @@ public class JpaSE {
       final Map<Integer, Hijo> hijos = new HashMap<>();
       hijos.put(24921397, new Hijo(24921397, "Elías", p1));
       hijos.put(16735546, new Hijo(16735546, "papi", p1));
-      p1.setHijos(hijos);      
+      p1.setHijos(hijos);
       final Map<Integer, Departamento> departamentos = new HashMap<>();
       departamentos.put(1, new Departamento(OrientacionGeografica.ESTE, p1));
       departamentos.put(2, new Departamento(OrientacionGeografica.NORTE, p1));
@@ -48,6 +50,18 @@ public class JpaSE {
       p1.setNotebooks(notes);
       p1.setDeptos(departamentos);
       p1.setTelefonoMap(telefonos);
+
+      MascotaPatas mp1 = new MascotaPatas(1, 1);
+      Mascota m1 = new Mascota(mp1);
+      MascotaPatas mp2 = new MascotaPatas(2, 2);
+      Mascota m2 = new Mascota(mp1);
+      m1.setPersona(p1);
+      m2.setPersona(p1);
+      final Map<MascotaPatas, Mascota> mascotas = new HashMap<>();
+      mascotas.put(mp1, m1);
+      mascotas.put(mp2, m2);
+      p1.setMascotas(mascotas);
+
       p1.getTelefonos().add(67);
       p1.getTelefonos().add(68);
       p1.getTelefonos().add(4);
@@ -64,6 +78,6 @@ public class JpaSE {
       e.printStackTrace();
       em.getTransaction().rollback();
     }
-//    emf.close();
+    // emf.close();
   }
 }

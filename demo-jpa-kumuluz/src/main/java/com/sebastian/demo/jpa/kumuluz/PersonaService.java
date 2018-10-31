@@ -4,6 +4,7 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import com.sebastian.demo.jpa.kumuluz.dominio.Persona;
 
 /**
@@ -13,6 +14,7 @@ import com.sebastian.demo.jpa.kumuluz.dominio.Persona;
  *
  */
 @RequestScoped
+@Transactional
 public class PersonaService {
 
   @PersistenceContext(unitName = "kum-jpa")

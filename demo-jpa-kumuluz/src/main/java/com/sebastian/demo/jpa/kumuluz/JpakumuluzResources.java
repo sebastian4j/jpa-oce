@@ -88,7 +88,6 @@ public class JpakumuluzResources {
   @Path("/crear")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  @Transactional
   public Response crearPersona(final Persona p) {
     Logger.getLogger(getClass().getName()).info(p.toString());
     ps.persistir(p);

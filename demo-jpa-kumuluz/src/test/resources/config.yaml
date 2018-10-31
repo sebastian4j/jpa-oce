@@ -1,7 +1,7 @@
 kumuluzee:
   datasources:
     - jndi-name: jdbc/persona
-      connection-url: jdbc:mysql://192.168.56.101:3306/jpa
+      connection-url: jdbc:mysql://192.168.56.101:3306/arq
       username: root
       password: wsx963zxc
       max-pool-size: 5

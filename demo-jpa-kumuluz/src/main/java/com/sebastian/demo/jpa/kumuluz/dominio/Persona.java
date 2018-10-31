@@ -2,9 +2,6 @@ package com.sebastian.demo.jpa.kumuluz.dominio;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * representa la persona.
@@ -13,12 +10,16 @@ import lombok.NoArgsConstructor;
  *
  */
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Persona {
   private @Id int id;
   private String nombre;
+
+  public Persona() {}
+
+  public Persona(int id, String nombre) {
+    this.id = id;
+    this.nombre = nombre;
+  }
 
   /**
    * @return the id
@@ -48,5 +49,14 @@ public class Persona {
     this.nombre = nombre;
   }
 
+  /*
+   * (non-Javadoc)
+   *
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+    return "Persona [id=" + id + ", nombre=" + nombre + "]";
+  }
 
 }

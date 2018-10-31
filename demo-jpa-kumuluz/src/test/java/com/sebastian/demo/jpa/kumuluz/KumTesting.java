@@ -37,6 +37,7 @@ public class KumTesting {
     p.setId(ThreadLocalRandom.current().nextInt());
     p.setNombre(UUID.randomUUID().toString());
     a.crearPersona(p);
+    System.out.println(a.obtenerPersona(p.getId()));
     Assert.assertEquals(1, ps.todas().size());
   }
 }

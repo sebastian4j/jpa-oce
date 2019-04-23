@@ -4,3 +4,15 @@ demo-jpa-kumuluz/target/
 /.recommenders/
 
 RemoteSystemsTempFiles/
+/mueve.lista/target/
+**/target/**
+**/nb*.xml
+**/.**
+**/ObjectStore/**
+**/.classpath
+
+
+
+
+
+

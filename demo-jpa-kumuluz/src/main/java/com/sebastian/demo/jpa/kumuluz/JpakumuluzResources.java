@@ -1,5 +1,8 @@
 package com.sebastian.demo.jpa.kumuluz;
 
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -129,4 +132,5 @@ public class JpakumuluzResources {
   public Response listarPersonas() {
     return Response.ok(ps.todas()).build();
   }
+
 }

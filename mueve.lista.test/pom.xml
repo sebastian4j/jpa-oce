@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.sebastian</groupId>
-    <artifactId>mueve.lista</artifactId>
+    <artifactId>mueve.lista.test</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
@@ -38,7 +38,11 @@
             <version>3.12.2</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.sebastian</groupId>
+            <artifactId>mueve.lista</artifactId>
+            <version>[0,)</version>
+        </dependency>
         <!--
         <dependency>
             <groupId>javax.xml.bind</groupId>
@@ -61,13 +65,35 @@
             <version>1.1.1</version>
         </dependency>-->
     </dependencies>
+
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
-            </plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.1</version>
+                <configuration>
+                    <environmentVariables>
+                        <clave1>valor1</clave1>
+                        <clave2>valor2</clave2>
+                        <clave3>valor3</clave3>
+                    </environmentVariables>
+                    <systemProperties>
+                        <clave4>valor4</clave4>
+                        <clave5>valor5</clave5>
+                        <clave6>valor6</clave6>
+                    </systemProperties>
+                </configuration>
+            </plugin>     
         </plugins>
     </build>
 </project>

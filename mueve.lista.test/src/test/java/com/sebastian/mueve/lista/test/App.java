@@ -1,17 +1,20 @@
-package com.sebastian.mueve.lista;
+package com.sebastian.mueve.lista.test;
 
+import com.sebastian.mueve.lista.Cosa;
+import com.sebastian.mueve.lista.Persona;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import org.junit.Test;
 
 /**
  *
  * @author Sebastián Ávila A.
  */
 public class App {
-
-    private void crear() {
+    @Test
+    public void crear() {
         final EntityManagerFactory emf = Persistence.createEntityManagerFactory("copia-pu");
         final EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
@@ -33,7 +36,7 @@ public class App {
         em.close();
     }
 
-    private void copiar() {
+    public void copiar() {
         final EntityManagerFactory emf = Persistence.createEntityManagerFactory("copia-pu");
         final EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
@@ -54,10 +57,5 @@ public class App {
         ///////////////////
         em.getTransaction().commit();
         em.close();
-    }
-
-    public static void main(String[] args) {
-        // new App().crear();
-        new App().copiar();
     }
 }
